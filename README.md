@@ -93,7 +93,8 @@ _That is particularly interesting while committing multiple times in a PR and th
 | Name | Description | Required | Default |
 | --- | --- | --- | --- |
 | `GITHUB_TOKEN` | Token that is used to create comments | ✅ | |
-| `message` | The comment body | ✅ | |
+| `message` | The comment body | | |
+| `file` | File to read commend body | | |
 | `reactions` | List of reactions for the comment (comma separated). See https://docs.github.com/en/rest/reactions#reaction-types  | | |
 | `pr_number` | The number of the pull request where to create the comment | | current pull request number (deduced from context) |
 | `comment_includes` | The text that should be used to find comment in case of replacement. | | |

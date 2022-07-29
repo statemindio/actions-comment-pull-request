@@ -1,5 +1,6 @@
 import * as github from '@actions/github';
 import * as core from '@actions/core';
+import * as fs from 'fs';
 import { GetResponseDataTypeFromEndpointMethod } from '@octokit/types';
 
 // See https://docs.github.com/en/rest/reactions#reaction-types
@@ -8,7 +9,8 @@ type Reaction = typeof REACTIONS[number];
 
 async function run() {
   try {
-    const message: string = core.getInput('message');
+    let message: string = core.getInput('message');
+    const file: string = core.getInput('file');
     const github_token: string = core.getInput('GITHUB_TOKEN');
     const pr_number: string = core.getInput('pr_number');
     const comment_includes: string = core.getInput('comment_includes');
@@ -22,6 +24,12 @@ async function run() {
     if (!pull_number) {
       core.setFailed('No pull request in input neither in current context.');
       return;
+    }
+
+    if (file) {
+        message = fs.readFileSync(file, {
+            encoding: 'utf-8',
+        });
     }
 
     async function addReactions(comment_id: number, reactions: string) {
